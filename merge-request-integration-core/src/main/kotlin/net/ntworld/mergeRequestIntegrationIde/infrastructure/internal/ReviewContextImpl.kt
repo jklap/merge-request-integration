@@ -138,7 +138,7 @@ class ReviewContextImpl(
         myLogger.info("myCommentsMap was built successfully")
         myCommentsMap.forEach { (path, comments) ->
             val commentIds = comments.map { it.id }
-            myLogger.info("$path contains ${commentIds.joinToString(",")}")
+            myLogger.debug("$path contains ${commentIds.joinToString(",")}")
         }
     }
 

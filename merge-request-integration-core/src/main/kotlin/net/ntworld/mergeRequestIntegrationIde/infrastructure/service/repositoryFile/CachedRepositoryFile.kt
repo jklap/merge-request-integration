@@ -16,7 +16,7 @@ class CachedRepositoryFile(
     override fun findChanges(providerData: ProviderData, hashes: List<String>): List<Change> {
         val key = "${providerData.id}:${hashes.joinToString(",")}"
         return cache.getOrRun(key) {
-            myLogger.info("Cache $key not found")
+            myLogger.debug("Cache $key not found")
             val result = super.findChanges(providerData, hashes)
 
             cache.set(key, result, FIND_CHANGES_TTL)
@@ -27,7 +27,7 @@ class CachedRepositoryFile(
     override fun findIcon(providerData: ProviderData, path: String): Icon {
         val key = "${providerData.id}:icon:${path}"
         return cache.getOrRun(key) {
-            myLogger.info("Cache $key not found")
+            myLogger.debug("Cache $key not found")
             val result = super.findIcon(providerData, path)
 
             cache.set(key, result, FIND_ICON_TTL)
