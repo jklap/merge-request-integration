@@ -69,7 +69,7 @@ class FilesToolWindowTabImpl(
                 return
             }
 
-            if (e.clickCount == 2) {
+            if (e.clickCount == 1) {
                 handleTreeItemSelected(myTree.selectionPath)
             }
         }
