@@ -2,13 +2,16 @@ plugins {
     // "org.jetbrains.kotlin.jvm"
     kotlin("jvm") version "1.3.50" apply false
 
+    // 1.3.72
     // "org.jetbrains.kotlin.kapt"
     kotlin("kapt") version "1.3.50" apply false
+
+//    kotlin("plugin.serialization") version "1.5.0-M2" apply false
 
     // "kotlinx-serialization"
     id("kotlinx-serialization") version "1.3.50" apply false
 
-    id("org.jetbrains.intellij") version "0.4.12" apply false
+    id("org.jetbrains.intellij") version "0.7.2" apply false
 }
 
 subprojects {
@@ -16,12 +19,14 @@ subprojects {
         apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "org.jetbrains.kotlin.kapt")
         apply(plugin = "kotlinx-serialization")
+//        apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     }
 
     if (name == "merge-request-integration") {
         apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "org.jetbrains.kotlin.kapt")
         apply(plugin = "kotlinx-serialization")
+//        apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     }
 
     if (name == "merge-request-integration-core") {

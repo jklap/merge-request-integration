@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 val artifactGroup: String by project
 val artifactVersion: String by project
 val intellijVersion: String by project
@@ -41,21 +39,6 @@ intellij {
     setPlugins("git4idea")
 }
 
-val compileKotlin: KotlinCompile by tasks
-val compileTestKotlin: KotlinCompile by tasks
-
-compileKotlin.kotlinOptions {
-    jvmTarget = jvmTarget
-}
-
-compileTestKotlin.kotlinOptions {
-    jvmTarget = jvmTarget
-}
-
-tasks {
-    named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
-        kotlinOptions {
-            jvmTarget = jvmTarget
-        }
-    }
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = jvmTarget
 }

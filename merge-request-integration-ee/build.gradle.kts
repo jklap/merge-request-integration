@@ -47,29 +47,16 @@ intellij {
     setPlugins("git4idea")
 }
 
-val compileKotlin: KotlinCompile by tasks
-val compileTestKotlin: KotlinCompile by tasks
-
-compileKotlin.kotlinOptions {
-    jvmTarget = jvmTarget
-}
-
-compileTestKotlin.kotlinOptions {
-    jvmTarget = jvmTarget
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = jvmTarget
 }
 
 tasks {
-    named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
-        kotlinOptions {
-            jvmTarget = jvmTarget
-        }
-    }
-
     named<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
         val version = if (!enterpriseEditionVersion.endsWith("eap"))
             enterpriseEditionVersion else enterpriseEditionVersion.substring(0, enterpriseEditionVersion.length - 3)
-        changeNotes(htmlFixer("./merge-request-integration-ee/doc/release-notes.$version.html"))
-        pluginDescription(htmlFixer("./merge-request-integration-ee/doc/description.html"))
+//        changeNotes(htmlFixer("./merge-request-integration-ee/doc/release-notes.$version.html"))
+//        pluginDescription(htmlFixer("./merge-request-integration-ee/doc/description.html"))
         sinceBuild(intellijSinceBuild)
         untilBuild(intellijUntilBuild)
     }

@@ -11,6 +11,7 @@ val gitlab4jVersion: String by project
 val githubApiVersion: String by project
 val prettyTimeVersion: String by project
 val commonmarkVersion: String by project
+val mockkVersion: String by project
 
 group = artifactGroup
 version = artifactVersion
@@ -18,7 +19,6 @@ version = artifactVersion
 repositories {
     jcenter()
     mavenCentral()
-    mavenLocal()
     maven("https://jitpack.io")
 }
 
@@ -41,8 +41,8 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.9")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
 }
 
 tasks.withType<Test> {
@@ -55,10 +55,6 @@ kapt {
     }
 }
 
-tasks {
-    named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
-        kotlinOptions {
-            jvmTarget = jvmTarget
-        }
-    }
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = jvmTarget
 }

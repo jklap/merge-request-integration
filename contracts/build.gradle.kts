@@ -12,7 +12,6 @@ version = artifactVersion
 repositories {
     jcenter()
     mavenCentral()
-    mavenLocal()
     maven("https://jitpack.io")
 }
 
@@ -36,10 +35,6 @@ kapt {
     }
 }
 
-tasks {
-    named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileKotlin") {
-        kotlinOptions {
-            jvmTarget = jvmTarget
-        }
-    }
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = jvmTarget
 }
