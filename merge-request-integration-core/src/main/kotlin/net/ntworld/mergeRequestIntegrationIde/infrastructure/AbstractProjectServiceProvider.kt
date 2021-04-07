@@ -2,6 +2,7 @@ package net.ntworld.mergeRequestIntegrationIde.infrastructure
 
 import com.intellij.notification.NotificationDisplayType
 import com.intellij.notification.NotificationGroup
+import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
@@ -58,9 +59,8 @@ import com.intellij.openapi.project.Project as IdeaProject
 abstract class AbstractProjectServiceProvider(
     final override val project: IdeaProject
 ) : ProjectServiceProvider, ServiceBase() {
-    private val myNotification: NotificationGroup = NotificationGroup(
-        "Merge Request Integration", NotificationDisplayType.BALLOON, true
-    )
+    private val myNotification: NotificationGroup = NotificationGroupManager.getInstance().getNotificationGroup("Merge Request Integration")
+
     private var myIsInitialized = false
 
     final override val providerStorage: ProviderStorage = DefaultProviderStorage()

@@ -12,6 +12,7 @@
         <applicationService serviceImplementation="net.ntworld.mergeRequestIntegrationIdeCE.CommunityApplicationServiceProvider"/>
         <projectService serviceImplementation="net.ntworld.mergeRequestIntegrationIdeCE.CommunityProjectServiceProvider"/>
         <diff.DiffExtension implementation="net.ntworld.mergeRequestIntegrationIdeCE.DiffExtension"/>
+        <notificationGroup id="Merge Request Integration" displayType="BALLOON" key="net.ntworld.notifications"/>
 
         <projectConfigurable id="merge-request-integration-ce"
                              displayName="Merge Request Integration CE"
