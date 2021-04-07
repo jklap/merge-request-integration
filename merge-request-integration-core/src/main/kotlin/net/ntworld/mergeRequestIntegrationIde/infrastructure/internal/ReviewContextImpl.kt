@@ -72,7 +72,7 @@ class ReviewContextImpl(
         if (null !== comments) {
             return comments
         }
-        myLogger.info("There is no comments for $crossPlatformsPath")
+        myLogger.debug("There are no comments for $crossPlatformsPath")
         return listOf()
     }
 

@@ -102,7 +102,7 @@ class ProviderDetails(
     }
     private val myOpeningMRTabInfo by lazy {
         val tabInfo = TabInfo(myOpeningMRList.createComponent())
-        tabInfo.text = "Opening MRs"
+        tabInfo.text = "Open MRs"
 
         tabInfo
     }
