@@ -61,7 +61,7 @@ class ReviewContextImpl(
 
         // TODO: do something when has more than 1 change
         if (changes.size > 1) {
-            myLogger.info("There is more than 1 changes for $path")
+            myLogger.info("There is more than 1 change for $path")
         }
         return changes.first()
     }
@@ -135,7 +135,7 @@ class ReviewContextImpl(
                 doHashComment(repository, position.oldPath!!, comment)
             }
         }
-        myLogger.info("myCommentsMap was built successfully")
+        myLogger.debug("myCommentsMap was built successfully")
         myCommentsMap.forEach { (path, comments) ->
             val commentIds = comments.map { it.id }
             myLogger.debug("$path contains ${commentIds.joinToString(",")}")

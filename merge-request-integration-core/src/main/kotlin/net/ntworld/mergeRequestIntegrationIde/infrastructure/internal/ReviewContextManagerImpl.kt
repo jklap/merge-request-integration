@@ -81,7 +81,7 @@ class ReviewContextManagerImpl(
         val key = keyOf(providerId, mergeRequestId)
         val context = myContexts[key]
         if (null !== context) {
-            myLogger.info("Update comments for $key")
+            myLogger.debug("Update comments for $key")
             context.comments = comments
         }
     }
@@ -90,7 +90,7 @@ class ReviewContextManagerImpl(
         val key = keyOf(providerId, mergeRequestId)
         val context = myContexts[key]
         if (null !== context) {
-            myLogger.info("Update commits for $key")
+            myLogger.debug("Update commits for $key")
             context.commits = commits
         }
     }
@@ -99,7 +99,7 @@ class ReviewContextManagerImpl(
         val key = keyOf(providerId, mergeRequestId)
         val context = myContexts[key]
         if (null !== context) {
-            myLogger.info("Update changes for $key")
+            myLogger.debug("Update changes for $key")
             context.changes = changes
         }
     }
@@ -108,7 +108,7 @@ class ReviewContextManagerImpl(
         val key = keyOf(providerId, mergeRequestId)
         val context = myContexts[key]
         if (null !== context) {
-            myLogger.info("Update reviewingCommits for $key")
+            myLogger.debug("Update reviewingCommits for $key")
             context.reviewingCommits = commits
         }
     }
@@ -117,7 +117,7 @@ class ReviewContextManagerImpl(
         val key = keyOf(providerId, mergeRequestId)
         val context = myContexts[key]
         if (null !== context) {
-            myLogger.info("Update reviewingChanges for $key")
+            myLogger.debug("Update reviewingChanges for $key")
             context.reviewingChanges = changes
         }
     }
@@ -126,7 +126,7 @@ class ReviewContextManagerImpl(
         val key = keyOf(providerId, mergeRequest.id)
         val context = myContexts[key]
         if (null !== context) {
-            myLogger.info("Update diffReference for $key")
+            myLogger.debug("Update diffReference for $key")
             context.diffReference = mergeRequest.diffReference
         }
     }
