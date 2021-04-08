@@ -272,10 +272,6 @@ class NodeSyncManagerImplTest {
         override fun findNode(input: Any?): Node? {
             return null
         }
-
-        override fun isHolding(input: Any?, node: Node): Boolean {
-            return false
-        }
     }
 
     companion object {
