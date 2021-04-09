@@ -46,5 +46,6 @@ interface ReviewContext {
 
     companion object {
         val KEY = Key.create<ReviewContext>("mri.ReviewContext")
+        val HAS_VIEWED = Key.create<Boolean>("hasViewed")
     }
 }

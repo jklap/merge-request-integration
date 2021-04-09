@@ -22,6 +22,7 @@ class ReviewContextImpl(
     override val messageBusConnection: MessageBusConnection
 ) : ReviewContext {
     private val myLogger = Logger.getInstance(this.javaClass)
+
     // private val myPreviewDiffVirtualFileMap = mutableMapOf<Change, PreviewDiffVirtualFile>()
     private val myPreviewDiffVirtualFileMap = mutableMapOf<Int, PreviewDiffVirtualFile>()
     private val myCommentsMap = mutableMapOf<String, MutableList<Comment>>()
@@ -86,6 +87,7 @@ class ReviewContextImpl(
         } else {
             FileEditorManagerEx.getInstanceEx(project).openFile(diffFile, focus)
         }
+        putChangeData(change, ReviewContext.HAS_VIEWED, true)
     }
 
     override fun hasAnyChangeOpened(): Boolean {
@@ -124,6 +126,7 @@ class ReviewContextImpl(
         }
         myCommentsMap.clear()
         for (comment in value) {
+            myLogger.info("processing comment ${comment.id} w/parent ${comment.parentId} w/reply ${comment.replyId} and resolved ${comment.resolved}")
             val position = comment.position
             if (null === position) {
                 continue
@@ -138,7 +141,7 @@ class ReviewContextImpl(
         myLogger.debug("myCommentsMap was built successfully")
         myCommentsMap.forEach { (path, comments) ->
             val commentIds = comments.map { it.id }
-            myLogger.debug("$path contains ${commentIds.joinToString(",")}")
+            myLogger.info("$path contains comment ids ${commentIds.joinToString(",")}")
         }
     }
 
