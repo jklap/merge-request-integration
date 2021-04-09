@@ -304,38 +304,38 @@ abstract class AbstractConnectionsConfigurable(
         val initializedData = myInitializedData.filter { validateProviderSettings(it.value) }
         val validData = myData.filter { validateProviderSettings(it.value) }
         if (validData.size != initializedData.size) {
-            logger.info("Size of valid data & initialized data is not match")
+            logger.debug("Size of valid data & initialized data is not match")
             return true
         }
 
         for (entry in validData) {
             if (!initializedData.containsKey(entry.key)) {
-                logger.info("Initialized data does not contains ${entry.key}")
+                logger.debug("Initialized data does not contains ${entry.key}")
                 return true
             }
             val initializedItem = initializedData[entry.key]
             if (null === initializedItem) {
-                logger.info("Initialized data does not contains ${entry.key}")
+                logger.debug("Initialized data does not contains ${entry.key}")
                 return true
             }
             if (!initializedItem.isEquals(entry.value)) {
-                logger.info("Initialized data and data of ${entry.key} is not equals")
+                logger.debug("Initialized data and data of ${entry.key} is not equals")
                 return true
             }
         }
 
-        logger.info("All data are matched, not modified")
+        logger.debug("All data are matched, not modified")
         return false
     }
 
     override fun apply() {
-        logger.info("Delete global connections")
+        logger.debug("Delete global connections")
         val applicationServiceProvider = projectServiceProvider.applicationServiceProvider
         applicationServiceProvider.removeAllProviderConfigurations()
 
         for (entry in myData) {
             if (entry.value.deleted) {
-                logger.info("Delete connection ${entry.key}")
+                logger.debug("Delete connection ${entry.key}")
                 projectServiceProvider.removeProviderConfiguration(entry.value.id.trim())
                 continue
             }
