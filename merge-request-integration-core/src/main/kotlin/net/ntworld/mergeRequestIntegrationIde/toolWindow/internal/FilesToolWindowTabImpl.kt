@@ -83,27 +83,6 @@ class FilesToolWindowTabImpl(
         )
         panel
     }
-    private val myTreeMouseListener = object : MouseAdapter() {
-        override fun mousePressed(e: MouseEvent?) {
-            if (null === e) {
-                return
-            }
-
-            if (e.clickCount == 2) {
-                handleTreeItemSelected(myTree.selectionPath)
-            }
-        }
-    }
-    private val myKeyListener = object: KeyAdapter() {
-        override fun keyPressed(e: KeyEvent?) {
-            if (null === e) {
-                return
-            }
-            if (e.keyCode == KeyEvent.VK_ENTER) {
-                handleTreeItemSelected(myTree.selectionPath)
-            }
-        }
-    }
 
     init {
         myLabelEmpty.text = "<html>Files' changes will be displayed when you do Code Review<br/>or<br/>open a branch which has an opened Merge Request</html>"
@@ -114,8 +93,6 @@ class FilesToolWindowTabImpl(
         myTree.setDoubleClickAndEnterKeyHandler {
             handleTreeItemSelected(myTree.selectionPath)
         }
-//        myTree.addMouseListener(myTreeMouseListener)
-//        myTree.addKeyListener(myKeyListener)
 
         val reviewContext = projectServiceProvider.reviewContextManager.findDoingCodeReviewContext()
         if (null !== reviewContext) {
@@ -184,20 +161,25 @@ class FilesToolWindowTabImpl(
         var reviewContext: ReviewContext? = null
 
         override fun decorate(change: Change, component: SimpleColoredComponent, isShowFlatten: Boolean) {
+            if ( reviewContext == null  ) {
+                // don't display during rework
+                return
+            }
             val comments = reviewContext?.getCommentsByPath(ChangesUtil.getFilePath(change).path)
             if ( comments != null && ! comments.isEmpty() ) {
                 val groups = CommentUtil.groupCommentsByThreadId(comments)
-                myLogger.info("groups found: ${groups.keys}")
-//                val parents = comments.filter { comment -> groups.containsKey(comment.parentId) }
-//                myLogger.info("parents: $parents")
+                myLogger.debug("groups found: ${groups.keys}")
                 val unresolved = groups.filter { entry -> ! entry.value[0].resolved }
-//                myLogger.info("unresolved: $unresolved")
                 component.append("   " + unresolved.size, SimpleTextAttributes(SimpleTextAttributes.STYLE_ITALIC, Color.RED))
                 component.append("/" + groups.size, SimpleTextAttributes.GRAY_ITALIC_ATTRIBUTES)
             }
         }
 
         override fun preDecorate(change: Change, renderer: ChangesBrowserNodeRenderer, showFlatten: Boolean) {
+            if ( reviewContext == null ) {
+                // don't display during rework
+                return
+            }
             if ( reviewContext?.getChangeData(change, ReviewContext.HAS_VIEWED) == null ) {
                 renderer.append(" [" + "new" + "] ", SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
             }
