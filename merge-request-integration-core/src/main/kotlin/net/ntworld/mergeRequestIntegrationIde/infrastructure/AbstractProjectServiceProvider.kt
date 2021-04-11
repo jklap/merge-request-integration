@@ -137,15 +137,15 @@ abstract class AbstractProjectServiceProvider(
         connection.subscribe(BranchChangeListener.VCS_BRANCH_CHANGED, myBranchChangeListener)
     }
 
-    override fun readStateItem(item: Element, id: String, settings: ProviderSettings) {
-        super.readStateItem(item, id, settings)
-        filtersStorage.readFrom(item, id)
-    }
+//    override fun readStateItem(item: Element, id: String, settings: ProviderSettings) {
+//        super.readProviderStateItem(item, id, settings)
+//        filtersStorage.readFrom(item, id)
+//    }
 
-    override fun writeStateItem(item: Element, id: String, settings: ProviderSettings) {
-        super.writeStateItem(item, id, settings)
-        filtersStorage.writeTo(item, id)
-    }
+//    override fun writeStateItem(item: Element, id: String, settings: ProviderSettings) {
+//        super.writeProviderStateItem(item, id, settings)
+//        filtersStorage.writeTo(item, id)
+//    }
 
     override fun addProviderConfiguration(
         id: String,

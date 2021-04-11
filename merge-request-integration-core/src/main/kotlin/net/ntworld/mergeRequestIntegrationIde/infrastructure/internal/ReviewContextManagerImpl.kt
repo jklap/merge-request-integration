@@ -20,11 +20,18 @@ class ReviewContextManagerImpl(
 
     override fun initContext(providerData: ProviderData, mergeRequestInfo: MergeRequestInfo, selected: Boolean) {
         val key = keyOf(providerData.id, mergeRequestInfo.id)
-        myLogger.info("Init context $key")
+        myLogger.debug("Init context $key")
         if (!myContexts.contains(key)) {
-            myContexts[key] = ReviewContextImpl(
+            val reviewContext = ReviewContextImpl(
                 projectServiceProvider, providerData, mergeRequestInfo, projectServiceProvider.messageBus.connect()
             )
+            val reviewState = projectServiceProvider.applicationServiceProvider.getReviewState(key)
+            myLogger.debug("loaded review state $reviewState")
+            if ( reviewState != null ) {
+                reviewContext.setReviewState(reviewState)
+            }
+
+            myContexts[key] = reviewContext
         }
         if (selected) {
             mySelected = key
@@ -61,6 +68,12 @@ class ReviewContextManagerImpl(
     }
 
     override fun clearContextDoingCodeReview() {
+        val reviewContext = findDoingCodeReviewContext()
+        if ( reviewContext != null ) {
+            val reviewState = reviewContext.getReviewState(myDoingCodeReviewContext!!)
+            myLogger.debug("pre save review state: $reviewState")
+            projectServiceProvider.applicationServiceProvider.addReviewState(reviewState)
+        }
         myDoingCodeReviewContext = null
     }
 

@@ -3,31 +3,44 @@ package net.ntworld.mergeRequestIntegrationIde.infrastructure.internal
 import com.intellij.credentialStore.CredentialAttributes
 import com.intellij.ide.passwordSafe.PasswordSafe
 import com.intellij.openapi.components.PersistentStateComponent
+import com.intellij.openapi.diagnostic.Logger
 import net.ntworld.mergeRequest.ProviderInfo
 import net.ntworld.mergeRequest.api.ApiCredentials
 import net.ntworld.mergeRequestIntegration.provider.gitlab.Gitlab
 import net.ntworld.mergeRequestIntegrationIde.infrastructure.ProviderSettings
+import net.ntworld.mergeRequestIntegrationIde.infrastructure.ReviewState
 import org.jdom.Element
 
 open class ServiceBase : PersistentStateComponent<Element> {
+    private val myLogger = Logger.getInstance(this.javaClass)
+
     protected val providerSettingsData = mutableMapOf<String, ProviderSettings>()
+    protected val reviewSettingsData = mutableMapOf<String, ReviewState>()
+
     private val supportedProviders: List<ProviderInfo> = listOf(
         Gitlab
         // Gitlab, Github
     )
 
     override fun getState(): Element? {
-        val element = Element("Provider")
+        val element = Element("Providers")
         providerSettingsData.values.map {
-            val item = Element("Item")
+            val item = Element("Provider")
             item.setAttribute("id", it.id)
-            writeStateItem(item, it.id, it)
+            writeProviderStateItem(item, it.id, it)
+            element.addContent(item)
+        }
+        myLogger.debug("settings $reviewSettingsData")
+        reviewSettingsData.values.map {
+            val item = Element("Review")
+            item.setAttribute("id", it.id)
+            writeReviewStateItem(item, it.id, it)
             element.addContent(item)
         }
         return element
     }
 
-    protected open fun writeStateItem(item: Element, id: String, settings: ProviderSettings) {
+    protected open fun writeProviderStateItem(item: Element, id: String, settings: ProviderSettings) {
         item.setAttribute("providerId", settings.info.id)
         item.setAttribute("url", settings.credentials.url)
         item.setAttribute("login", settings.credentials.login)
@@ -38,38 +51,78 @@ open class ServiceBase : PersistentStateComponent<Element> {
         item.setAttribute("repository", settings.repository)
     }
 
-    override fun loadState(state: Element) {
-        for (item in state.children) {
-            if (item.name != "Item") {
-                continue
+    protected open fun writeReviewStateItem(item: Element, id: String, review: ReviewState) {
+        review.data.forEach { c, d ->
+            d.forEach { k, v ->
+                val ele = Element("Change")
+                ele.setAttribute("change", c)
+                ele.setAttribute("key", k)
+                ele.setAttribute("value", v)
+                item.addContent(ele)
             }
-
-            val info = supportedProviders.firstOrNull { it.id == item.getAttribute("providerId").value }
-            if (null === info) {
-                continue
-            }
-            val credentials = ApiCredentialsImpl(
-                url = item.getAttribute("url").value,
-                login = item.getAttribute("login").value,
-                token = "",
-                projectId = item.getAttribute("projectId").value,
-                version = item.getAttribute("version").value,
-                info = item.getAttribute("info").value,
-                ignoreSSLCertificateErrors = shouldIgnoreSSLCertificateErrors(item)
-            )
-            val id = item.getAttribute("id").value
-            val settings = ProviderSettingsImpl(
-                id = id.trim(),
-                info = info,
-                credentials = decryptCredentials(info, credentials),
-                repository = item.getAttribute("repository").value
-            )
-            readStateItem(item, id, settings)
         }
     }
 
-    protected open fun readStateItem(item: Element, id: String, settings: ProviderSettings) {
+    override fun loadState(state: Element) {
+        for (item in state.children) {
+            if (item.name == "Item" || item.name == "Provider") {
+                loadProvider(item)
+            } else if (item.name == "Review") {
+                loadReviewState(item)
+            }
+        }
+    }
+
+    private fun loadProvider(item: Element) {
+        val info = supportedProviders.firstOrNull { it.id == item.getAttribute("providerId").value }
+        if (null === info) {
+            return
+        }
+        val credentials = ApiCredentialsImpl(
+            url = item.getAttribute("url").value,
+            login = item.getAttribute("login").value,
+            token = "",
+            projectId = item.getAttribute("projectId").value,
+            version = item.getAttribute("version").value,
+            info = item.getAttribute("info").value,
+            ignoreSSLCertificateErrors = shouldIgnoreSSLCertificateErrors(item)
+        )
+        val id = item.getAttribute("id").value
+        val settings = ProviderSettingsImpl(
+            id = id.trim(),
+            info = info,
+            credentials = decryptCredentials(info, credentials),
+            repository = item.getAttribute("repository").value
+        )
+        readProviderStateItem(item, id, settings)
+    }
+
+    private fun loadReviewState(item: Element) {
+        myLogger.debug("loading state $item")
+        val id = item.getAttribute("id").value
+        val data = mutableMapOf<String, MutableMap<String, String>>()
+        item.children.forEach { c ->
+            val change = c.getAttribute("change").value
+            val key = c.getAttribute("key").value
+            val value = c.getAttribute("value").value
+            if ( ! data.containsKey(change) ) {
+                data[change] = mutableMapOf()
+            }
+            data[change]?.put(key, value)
+        }
+        val state = ReviewStateImpl(
+            id = id,
+            data = data
+        )
+        readReviewStateItem(item, id, state)
+    }
+
+    protected open fun readProviderStateItem(item: Element, id: String, settings: ProviderSettings) {
         providerSettingsData[id] = settings
+    }
+
+    protected open fun readReviewStateItem(item: Element, id: String, state: ReviewStateImpl) {
+        reviewSettingsData[id] = state
     }
 
     private fun shouldIgnoreSSLCertificateErrors(item: Element): Boolean {

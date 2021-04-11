@@ -13,7 +13,9 @@ import git4idea.repo.GitRepository
 import net.ntworld.mergeRequest.*
 import net.ntworld.mergeRequestIntegrationIde.infrastructure.ProjectServiceProvider
 import net.ntworld.mergeRequestIntegrationIde.infrastructure.ReviewContext
+import net.ntworld.mergeRequestIntegrationIde.infrastructure.ReviewState
 import net.ntworld.mergeRequestIntegrationIde.util.RepositoryUtil
+import java.util.function.BiConsumer
 
 class ReviewContextImpl(
     val projectServiceProvider: ProjectServiceProvider,
@@ -87,7 +89,8 @@ class ReviewContextImpl(
         } else {
             FileEditorManagerEx.getInstanceEx(project).openFile(diffFile, focus)
         }
-        putChangeData(change, ReviewContext.HAS_VIEWED, true)
+        myLogger.debug("change: $change: before: ${change.beforeRevision?.revisionNumber} after ${change.afterRevision?.revisionNumber}")
+        putChangeData(change, ReviewContext.HAS_VIEWED, change.afterRevision?.revisionNumber?.asString())
     }
 
     override fun hasAnyChangeOpened(): Boolean {
@@ -120,13 +123,49 @@ class ReviewContextImpl(
         }
     }
 
+    override fun getReviewState(id: String) : ReviewState {
+        val data = mutableMapOf<String, MutableMap<String, String>>()
+        myChangesDataMap.forEach { (c, m) ->
+            val d = mutableMapOf<String, String>()
+            m.get().keys.forEach { k ->
+                // save each of the user data items into the map
+                d[k.toString()] = m.getUserData(k).toString()
+            }
+            val filePaths = ChangesUtil.getPathsCaseSensitive(c)
+            for (filePath in filePaths) {
+                // store the change under any file paths returned
+                data[filePath.path] = d
+            }
+        }
+        myLogger.debug("generated review state: $data")
+        val reviewState = ReviewStateImpl(
+            id = id,
+            data = data
+        )
+        return reviewState
+    }
+
+    override fun setReviewState(state: ReviewState) {
+        state.data.forEach { c, d ->
+            val change = findChangeByPath(c)
+            if ( change == null ) {
+                myLogger.info("unable to find change for $c")
+                return@forEach
+            }
+            d.forEach { (k, v) ->
+                myLogger.debug("saving user data $c: $k: $v")
+                putChangeData(change, Key(k), v)
+            }
+        }
+    }
+
     private fun buildCommentsMap(value: Collection<Comment>) {
         if (null === repository) {
             return
         }
         myCommentsMap.clear()
         for (comment in value) {
-            myLogger.info("processing comment ${comment.id} w/parent ${comment.parentId} w/reply ${comment.replyId} and resolved ${comment.resolved}")
+            myLogger.debug("processing comment ${comment.id} w/parent ${comment.parentId} w/reply ${comment.replyId} and resolved ${comment.resolved}")
             val position = comment.position
             if (null === position) {
                 continue

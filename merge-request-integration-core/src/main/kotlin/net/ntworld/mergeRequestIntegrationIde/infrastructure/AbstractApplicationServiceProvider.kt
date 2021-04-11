@@ -20,8 +20,11 @@ import net.ntworld.mergeRequestIntegrationIde.watcher.WatcherManager
 import net.ntworld.mergeRequestIntegrationIde.watcher.WatcherManagerImpl
 import org.jdom.Element
 import java.net.URL
+import com.intellij.openapi.diagnostic.Logger
 
 abstract class AbstractApplicationServiceProvider : ApplicationServiceProvider, ServiceBase() {
+    private val myLogger = Logger.getInstance(this.javaClass)
+
     final override val watcherManager: WatcherManager = WatcherManagerImpl()
     private val myProjectServiceProviders = mutableSetOf<ProjectServiceProvider>()
 
@@ -124,5 +127,14 @@ abstract class AbstractApplicationServiceProvider : ApplicationServiceProvider, 
         getAllProjectServiceProviders().forEach {
             it.onApplicationSettingsChanged(old, new)
         }
+    }
+
+    override fun getReviewState(id: String): ReviewState? {
+        return reviewSettingsData[id]
+    }
+
+    override fun addReviewState(state: ReviewState) {
+        myLogger.debug("adding data $state")
+        reviewSettingsData[state.id] = state
     }
 }

@@ -180,8 +180,14 @@ class FilesToolWindowTabImpl(
                 // don't display during rework
                 return
             }
-            if ( reviewContext?.getChangeData(change, ReviewContext.HAS_VIEWED) == null ) {
+            val viewedRevision = reviewContext?.getChangeData(change, ReviewContext.HAS_VIEWED)
+            if ( viewedRevision == null ) {
                 renderer.append(" [" + "new" + "] ", SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
+            } else {
+                // check revision
+                if ( viewedRevision != change.afterRevision?.revisionNumber?.asString()) {
+                    renderer.append(" [" + "updated" + "] ", SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
+                }
             }
         }
     }

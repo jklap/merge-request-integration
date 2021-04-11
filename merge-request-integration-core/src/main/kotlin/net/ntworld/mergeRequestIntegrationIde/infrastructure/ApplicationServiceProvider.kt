@@ -30,4 +30,9 @@ interface ApplicationServiceProvider {
     fun isLegal(providerData: ProviderData): Boolean
 
     fun getAllProjectServiceProviders(): List<ProjectServiceProvider>
+
+    fun getReviewState(id: String): ReviewState?
+
+    fun addReviewState(state: ReviewState)
+
 }

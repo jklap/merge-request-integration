@@ -41,7 +41,7 @@ class RegisterProviderTask(
             if (!indicator.isCanceled) {
                 listener.providerRegistered(pair.first)
                 if (pair.first.status == ProviderStatus.ERROR) {
-                    projectServiceProvider.notify(pair.first.errorMessage ?: "", NotificationType.ERROR)
+                    projectServiceProvider.notify(pair.first.errorMessage ?: "Unknown error", NotificationType.ERROR)
                 }
                 if (null !== pair.second) {
                     throw pair.second!!

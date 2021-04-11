@@ -44,8 +44,12 @@ interface ReviewContext {
 
     fun <T> putChangeData(change: Change, key: Key<T>, value: T?)
 
+    fun getReviewState(id: String) : ReviewState
+
+    fun setReviewState(state: ReviewState)
+
     companion object {
         val KEY = Key.create<ReviewContext>("mri.ReviewContext")
-        val HAS_VIEWED = Key.create<Boolean>("hasViewed")
+        val HAS_VIEWED = Key.create<String>("hasViewed")
     }
 }
