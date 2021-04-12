@@ -15,7 +15,6 @@ import net.ntworld.mergeRequestIntegrationIde.infrastructure.ProjectServiceProvi
 import net.ntworld.mergeRequestIntegrationIde.infrastructure.ReviewContext
 import net.ntworld.mergeRequestIntegrationIde.infrastructure.ReviewState
 import net.ntworld.mergeRequestIntegrationIde.util.RepositoryUtil
-import java.util.function.BiConsumer
 
 class ReviewContextImpl(
     val projectServiceProvider: ProjectServiceProvider,
