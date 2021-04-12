@@ -24,5 +24,5 @@ class EnterpriseApplicationServiceProvider: AbstractApplicationServiceProvider()
         return service
     }
 
-    override val singleMRToolWindowName: String = "Merge Request"
+    override val singleMRToolWindowName: String = "Merge Review"
 }

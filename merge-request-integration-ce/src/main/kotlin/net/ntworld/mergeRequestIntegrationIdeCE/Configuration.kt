@@ -9,6 +9,6 @@ class Configuration: ConfigurationBase(ServiceManager.getService(CommunityApplic
     }
 
     override fun getDisplayName(): String {
-        return "Merge Request Integration CE"
+        return "GitLab MR Integration"
     }
 }

@@ -15,27 +15,21 @@
         <notificationGroup id="Merge Request Integration" displayType="BALLOON" key="net.ntworld.notifications"/>
 
         <projectConfigurable id="merge-request-integration-ce"
-                             displayName="Merge Request Integration CE"
+                             displayName="GitLab MR Integration"
                              instance="net.ntworld.mergeRequestIntegrationIdeCE.Configuration"/>
         <projectConfigurable groupId="merge-request-integration-ce"
                              id="MRI:gitlab-ce"
                              displayName="Gitlab"
                              instance="net.ntworld.mergeRequestIntegrationIdeCE.GitlabConnectionsConfigurable"/>
-        <!--
-        <projectConfigurable groupId="merge-request-integration-ce"
-                             id="MRI:github-ce"
-                             displayName="Github"
-                             instance="net.ntworld.mergeRequestIntegrationIdeCE.GithubConnectionsConfigurable"/>
-        -->
 
-        <toolWindow id="Merge Request Integration CE"
+        <toolWindow id="Merge Requests"
                     secondary="false"
                     anchor="bottom"
                     icon="/icons/main-tool-window.svg"
                     canCloseContents="true"
                     factoryClass="net.ntworld.mergeRequestIntegrationIdeCE.MainToolWindowFactory"/>
 
-        <toolWindow id="Merge Request CE"
+        <toolWindow id="Merge Review"
                     secondary="true"
                     anchor="left"
                     icon="/icons/single-mr-tool-window.svg"
