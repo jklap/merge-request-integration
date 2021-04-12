@@ -6,7 +6,7 @@ val foundationVersion: String by project
 val gitlab4jVersion: String by project
 val githubApiVersion: String by project
 val prettyTimeVersion: String by project
-val commonmarkVersion: String by project
+val flexMarkVersion: String by project
 val mockkVersion: String by project
 
 group = artifactGroup
@@ -24,7 +24,7 @@ dependencies {
     implementation("org.gitlab4j:gitlab4j-api:$gitlab4jVersion")
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
-    compile("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
 
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration"))

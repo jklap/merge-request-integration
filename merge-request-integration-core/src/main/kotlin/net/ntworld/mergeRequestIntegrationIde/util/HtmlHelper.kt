@@ -1,8 +1,8 @@
 package net.ntworld.mergeRequestIntegrationIde.util
 
+import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.parser.Parser
 import net.ntworld.mergeRequest.ProviderData
-import org.commonmark.parser.Parser
-import org.commonmark.renderer.html.HtmlRenderer
 
 object HtmlHelper {
     private val myCommonMarkParser = Parser.builder().build()

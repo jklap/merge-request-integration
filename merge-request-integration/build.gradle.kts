@@ -10,7 +10,7 @@ val fuelVersion: String by project
 val gitlab4jVersion: String by project
 val githubApiVersion: String by project
 val prettyTimeVersion: String by project
-val commonmarkVersion: String by project
+val flexMarkVersion: String by project
 val mockkVersion: String by project
 
 group = artifactGroup
@@ -32,9 +32,9 @@ dependencies {
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
 
-    compile("com.atlassian.commonmark:commonmark:$commonmarkVersion")
-    compile("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationRuntimeVersion")
-    compile("com.github.javafaker:javafaker:$javaFakerVersion")
+    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationRuntimeVersion")
+    implementation("com.github.javafaker:javafaker:$javaFakerVersion")
 
     kapt("com.github.nhat-phan.foundation:foundation-processor:$foundationProcessorVersion")
     kaptTest("com.github.nhat-phan.foundation:foundation-processor:$foundationProcessorVersion")
