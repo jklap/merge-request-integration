@@ -13,6 +13,7 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.SimpleToolWindowPanel
 import com.intellij.ui.JBColor
 import com.intellij.ui.components.Label
+import com.intellij.util.ui.UIUtil
 import net.miginfocom.swing.MigLayout
 import net.ntworld.mergeRequest.Comment
 import net.ntworld.mergeRequest.MergeRequestInfo
@@ -27,9 +28,12 @@ import java.awt.Color
 import java.awt.Cursor
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
+import java.net.URL
 import javax.swing.BorderFactory
 import javax.swing.JComponent
+import javax.swing.JEditorPane
 import javax.swing.JPanel
+import javax.swing.text.html.HTMLEditorKit
 
 class CommentComponentImpl(
     private val factory: CommentComponentFactory,
@@ -133,10 +137,15 @@ class CommentComponentImpl(
         }
 
         myUsernameLabel.foreground = Color(153, 153, 153)
+
         myWebView.text = buildHtml(providerData, comment)
+
+        val editor: JEditorPane = myWebView as JEditorPane
+        val kit: HTMLEditorKit = editor.editorKit as HTMLEditorKit
+        kit.styleSheet.addStyleSheet(UIUtil.loadStyleSheet(this.javaClass.classLoader.getResource("css/markdown.css")))
+
         myPanel.toolbar = createToolbar()
         myPanel.setContent(myWebView.component)
-
         myPanel.border = BorderFactory.createMatteBorder(
             0, indent * 40 + options.borderLeftRight, 1, options.borderLeftRight, JBColor.border()
         )
@@ -355,4 +364,5 @@ class CommentComponentImpl(
             }
         }
     }
+
 }

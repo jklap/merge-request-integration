@@ -1,0 +1,27 @@
+code {
+    font-family: Menlo, Monaco, "Courier New", monospace;
+}
+
+pre {
+    padding: .5rem;
+    line-height: 1.25;
+    overflow-x: scroll;
+}
+
+code {
+    color: black;
+    border: 2px solid #ff8457;
+    background-color: #ffb89d;
+    font-size: smaller;
+}
+
+code[class^="language-suggestion"] {
+    background-color: #ddfbe6;
+    border-color: #c7f0d2;
+}
+
+blockquote {
+    border-left: 3px solid #01ff70;
+    padding-left: 1rem;
+}
+
