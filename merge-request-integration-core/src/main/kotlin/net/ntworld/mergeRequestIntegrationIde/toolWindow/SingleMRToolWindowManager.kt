@@ -1,6 +1,7 @@
 package net.ntworld.mergeRequestIntegrationIde.toolWindow
 
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.vcs.changes.Change
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.ui.content.Content
@@ -21,6 +22,8 @@ class SingleMRToolWindowManager(
     private val projectServiceProvider: ProjectServiceProvider,
     private val toolWindow: ToolWindow
 ) : SingleMRToolWindowNotifier {
+    private val myLogger = Logger.getInstance(this.javaClass)
+
     private var myReviewChangesTab: FilesToolWindowTab? = null
     private val myReworkChangesTabs = mutableSetOf<FilesToolWindowTab>()
     private val myReworkCommentsTabs = mutableSetOf<CommentsToolWindowTab>()
@@ -42,7 +45,7 @@ class SingleMRToolWindowManager(
 
     override fun registerReworkWatcher(reworkWatcher: ReworkWatcher) {
         val key = reworkWatcher.key()
-        debug("$key: add watcher to SupportedProviders")
+        myLogger.info("$key: add watcher to SupportedProviders")
         mySupportedProviders[reworkWatcher.providerData.id] = reworkWatcher.branchName
     }
 
@@ -50,10 +53,10 @@ class SingleMRToolWindowManager(
         val key = reworkWatcher.key()
         val currentBranch = mySupportedProviders[reworkWatcher.providerData.id]
         if (currentBranch == reworkWatcher.branchName) {
-            debug("$key: remove ReworkWatcher out SupportedWatchers")
+            myLogger.info("$key: remove ReworkWatcher out SupportedWatchers")
             mySupportedProviders.remove(reworkWatcher.providerData.id)
             ApplicationManager.getApplication().invokeLater {
-                debug("$key: remove tab out of tool window")
+                myLogger.info("$key: remove tab out of tool window")
 
                 val tab = myReworkChangesTabs.firstOrNull { it.providerData.id == reworkWatcher.providerData.id }
                 if (null !== tab) {
@@ -67,12 +70,12 @@ class SingleMRToolWindowManager(
 
                 if (myReworkChangesTabs.isEmpty() && myReworkCommentsTabs.isEmpty()) {
                     projectServiceProvider.hideSingleMRToolWindow {
-                        debug("$key: hide tool window because there is nothing left")
+                        myLogger.info("$key: hide tool window because there is nothing left")
                     }
                 }
             }
         } else {
-            debug("$key: current provider have another branch, do nothing")
+            myLogger.info("$key: current provider have another branch, do nothing")
         }
     }
 
@@ -113,14 +116,14 @@ class SingleMRToolWindowManager(
     ) = fillingDataForReworkTab(reworkWatcher) {
         val currentTab = myReworkChangesTabs.firstOrNull { it.providerData.id == reworkWatcher.providerData.id }
         if (null !== currentTab) {
-            debug("${reworkWatcher.key()}: update current Files tab's data")
+            myLogger.info("${reworkWatcher.key()}: update current Files tab's data")
             currentTab.setChanges(reworkWatcher.providerData, changes)
             return@fillingDataForReworkTab
         }
 
         val newTab = makeFilesToolWindowTab(reworkWatcher.providerData, false)
         newTab.setChanges(reworkWatcher.providerData, changes)
-        debug("${reworkWatcher.key()}: add new Files tab of  to tool window")
+        myLogger.info("${reworkWatcher.key()}: add new Files tab to tool window")
         addTabToToolWindow(newTab, myReworkChangesTabs, SINGLE_MR_REWORK_CHANGES_PREFIX)
     }
 
@@ -131,7 +134,7 @@ class SingleMRToolWindowManager(
     ) = fillingDataForReworkTab(reworkWatcher) {
         val currentTab = myReworkCommentsTabs.firstOrNull { it.providerData.id == reworkWatcher.providerData.id }
         if (null !== currentTab) {
-            debug("${reworkWatcher.key()}: update current Comments tab's data")
+            myLogger.info("${reworkWatcher.key()}: update current Comments tab's data")
             currentTab.setMergeRequestInfo(reworkWatcher.mergeRequestInfo)
             currentTab.setDisplayResolvedComments(displayResolvedComments)
             currentTab.setComments(comments)
@@ -139,7 +142,7 @@ class SingleMRToolWindowManager(
         }
 
         val newTab = makeCommentsToolWindowTab(reworkWatcher.providerData, reworkWatcher.mergeRequestInfo, comments)
-        debug("${reworkWatcher.key()}: add new Comments tab to tool window")
+        myLogger.info("${reworkWatcher.key()}: add new Comments tab to tool window")
         addTabToToolWindow(newTab, myReworkCommentsTabs, SINGLE_MR_REWORK_COMMENTS_PREFIX)
     }
 
@@ -155,10 +158,10 @@ class SingleMRToolWindowManager(
         val key = reworkWatcher.key()
         if (mySupportedProviders.contains(reworkWatcher.providerData.id)) {
             removeToolWindowTabsForCodeReview()
-            debug("$key: ReworkWatcher is supported")
+            myLogger.info("$key: ReworkWatcher is supported")
             invoker()
         } else {
-            debug("$key: ReworkWatcher is NOT supported")
+            myLogger.info("$key: ReworkWatcher is NOT supported")
         }
     }
 
@@ -285,8 +288,4 @@ class SingleMRToolWindowManager(
         )
     }
 
-    private data class ComponentContainer(
-        val content: Content,
-        val isTabbed: Boolean
-    )
 }
