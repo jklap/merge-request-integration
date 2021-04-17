@@ -86,6 +86,7 @@ class FilesToolWindowTabImpl(
             myChangeNodeDecorator.reviewContext = reviewContext
             setChanges(reviewContext.providerData, reviewContext.reviewingChanges)
         } else {
+            myLogger.info("closing (2)")
             hide()
         }
     }
@@ -120,6 +121,9 @@ class FilesToolWindowTabImpl(
 
     override fun setChanges(providerData: ProviderData, changes: List<Change>) {
         myProviderData = providerData
+        myLogger.info("from", Exception("here"))
+        myLogger.info("setting changes from:")
+        changes.forEach { change -> myLogger.info("$change.") }
         ApplicationManager.getApplication().invokeLater {
             myTree.setChangesToDisplay(changes)
         }
@@ -128,6 +132,7 @@ class FilesToolWindowTabImpl(
     }
 
     override fun hide() {
+        myLogger.info("closing via hide()")
         myTree.setChangesToDisplay(listOf())
         myToolbar.isVisible = false
         myComponent.setContent(myComponentEmpty)

@@ -39,7 +39,7 @@ class GroupComponentImpl(
         override fun onCancelClicked(editor: EditorComponent) {
             val shouldDestroy = if (editor.text.isNotBlank()) {
                 val result = Messages.showYesNoDialog(
-                    "Do you want to delete the whole content?", "Are you sure", Messages.getQuestionIcon()
+                    "Do you want to delete the whole content? (2)", "Are you sure", Messages.getQuestionIcon()
                 )
                 result == Messages.YES
             } else true

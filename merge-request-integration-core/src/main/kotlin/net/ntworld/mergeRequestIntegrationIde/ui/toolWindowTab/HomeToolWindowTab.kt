@@ -1,6 +1,7 @@
 package net.ntworld.mergeRequestIntegrationIde.ui.toolWindowTab
 
 import com.intellij.openapi.Disposable
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.ui.OnePixelSplitter
@@ -23,6 +24,8 @@ class HomeToolWindowTab(
     private val projectServiceProvider: ProjectServiceProvider,
     private val toolWindow: ToolWindow
 ) : Component, Disposable {
+    private val myLogger = Logger.getInstance(this.javaClass)
+
     private val mySplitter = OnePixelSplitter(HomeToolWindowTab::class.java.canonicalName, 0.35f)
     private val myCollectionPanel = ProviderCollection(projectServiceProvider)
     private val myDetailPanels = mutableMapOf<String, ProviderDetailsUI>()
@@ -30,6 +33,8 @@ class HomeToolWindowTab(
     private val myMRToolWindowTabs = mutableMapOf<String, MergeRequestToolWindowTab>()
     private val myProjectNotifier = object : ProjectNotifierAdapter() {
         override fun startCodeReview(reviewContext: ReviewContext) {
+            myLogger.info("closing (3)")
+
             myDetailPanels.forEach { it.value.hide() }
             myContents.forEach {
                 if (it.key == reviewContext.providerData.id) {

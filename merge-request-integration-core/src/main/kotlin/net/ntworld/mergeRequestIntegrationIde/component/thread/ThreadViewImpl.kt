@@ -1,5 +1,6 @@
 package net.ntworld.mergeRequestIntegrationIde.component.thread
 
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.diff.util.Side
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.editor.ex.EditorEx
@@ -45,6 +46,8 @@ class ThreadViewImpl(
     override val position: GutterPosition,
     private val replyInDialog: Boolean
 ) : AbstractView<ThreadView.ActionListener>(), ThreadView {
+    private val myLogger = Logger.getInstance(this.javaClass)
+
     override val dispatcher = EventDispatcher.create(ThreadView.ActionListener::class.java)
 
     private val myThreadPanel = Panel()
@@ -78,8 +81,9 @@ class ThreadViewImpl(
             val mainEditor = myCreatedEditors[""]
             if (null !== mainEditor && editor === mainEditor) {
                 val shouldHide = if (mainEditor.text.isNotBlank()) {
+                    // this happens if someone has typed text in an new comment
                     val result = Messages.showYesNoDialog(
-                        "Do you want to delete the whole content?", "Are you sure", Messages.getQuestionIcon()
+                        "Do you want to delete the whole content? (3)", "Are you sure", Messages.getQuestionIcon()
                     )
                     result == Messages.YES
                 } else true
@@ -209,6 +213,7 @@ class ThreadViewImpl(
             Options(borderLeftRight = 1, showMoveToDialog = true, openEditorInDialog = replyInDialog)
         )
         group.addListener(myGroupComponentEventListener)
+        // TODO: getting a already disposed of warning on this
         Disposer.register(this, group)
 
         myGroups[groupId] = group

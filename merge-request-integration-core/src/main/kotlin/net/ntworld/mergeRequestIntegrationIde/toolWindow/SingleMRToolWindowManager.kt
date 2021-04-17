@@ -82,6 +82,7 @@ class SingleMRToolWindowManager(
     override fun hideChangesAfterDoingCodeReview() {
         val reviewTab = myReviewChangesTab
         if (null !== reviewTab) {
+            myLogger.info("closing (1)")
             reviewTab.hide()
         }
     }

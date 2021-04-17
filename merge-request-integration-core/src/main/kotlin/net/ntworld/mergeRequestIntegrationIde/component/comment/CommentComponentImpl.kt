@@ -321,7 +321,7 @@ class CommentComponentImpl(
     ) {
         override fun actionPerformed(e: AnActionEvent) {
             val result = Messages.showYesNoDialog(
-                "Do you want to delete the comment?", "Are you sure", Messages.getQuestionIcon()
+                "Do you want to delete the comment? (6)", "Are you sure", Messages.getQuestionIcon()
             )
             if (result == Messages.YES) {
                 self.groupComponent.requestDeleteComment(self.comment)
