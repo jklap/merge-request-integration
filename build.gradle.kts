@@ -11,10 +11,10 @@ plugins {
     // "kotlinx-serialization"
     id("kotlinx-serialization") version "1.3.50" apply false
 
-    id("org.jetbrains.intellij") version "0.7.2" apply false
+    id("org.jetbrains.intellij") version "1.0" apply false
 
     // plugin to check for dependency updates via task dependencyUpdates
-    id("com.github.ben-manes.versions") version "0.38.0"
+    id("com.github.ben-manes.versions") version "0.39.0"
 }
 
 subprojects {

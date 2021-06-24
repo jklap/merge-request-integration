@@ -35,8 +35,8 @@ dependencies {
 }
 
 intellij {
-    version = intellijVersion
-    setPlugins("git4idea")
+    version.set(intellijVersion)
+    plugins.set(listOf("git4idea"))
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

@@ -42,9 +42,9 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = intellijVersion
-    updateSinceUntilBuild = true
-    setPlugins("git4idea")
+    version.set(intellijVersion)
+    updateSinceUntilBuild.set(true)
+    plugins.set(listOf("git4idea"))
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -57,8 +57,8 @@ tasks {
             communityEditionVersion else communityEditionVersion.substring(0, communityEditionVersion.length - 3)
 //        changeNotes(htmlFixer("./merge-request-integration-ce/doc/release-notes.$version.html"))
 //        pluginDescription(htmlFixer("./merge-request-integration-ce/doc/description.html"))
-        sinceBuild(intellijSinceBuild)
-        untilBuild(intellijUntilBuild)
+        sinceBuild.set(intellijSinceBuild)
+        untilBuild.set(intellijUntilBuild)
     }
 }
 
