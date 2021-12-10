@@ -29,7 +29,7 @@ class GitlabCreateDiffNoteCommandHandler : CommandHandler<GitlabCreateDiffNoteCo
                     newLine = command.position.newLine
                 )
             )
-            this.callGraphQL(json.stringify(CustomGraphqlRequest.serializer(), graphqlRequest))
+            this.callGraphQL(json.encodeToString(CustomGraphqlRequest.serializer(), graphqlRequest))
             Unit
         },
         failed = {

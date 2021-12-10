@@ -32,17 +32,17 @@ dependencies {
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
 
-    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationRuntimeVersion")
+    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationRuntimeVersion")
     implementation("com.github.javafaker:javafaker:$javaFakerVersion")
 
     kapt("com.github.nhat-phan.foundation:foundation-processor:$foundationProcessorVersion")
     kaptTest("com.github.nhat-phan.foundation:foundation-processor:$foundationProcessorVersion")
 
     testImplementation(kotlin("test"))
-    testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    testImplementation(kotlin("test-junit5"))
+    testImplementation("io.mockk:mockk:1.9")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
 }
 
 tasks.withType<Test> {

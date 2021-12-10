@@ -1,6 +1,6 @@
 package net.ntworld.mergeRequestIntegration.provider.gitlab.requestHandler
 
-import kotlinx.serialization.list
+import kotlinx.serialization.builtins.ListSerializer
 import net.ntworld.foundation.Handler
 import net.ntworld.foundation.RequestHandler
 import net.ntworld.mergeRequestIntegration.provider.gitlab.GitlabFuelClient
@@ -19,7 +19,9 @@ class GitlabGetMRPipelinesRequestHandler : RequestHandler<GitlabGetMRPipelinesRe
 
             GitlabGetMRPipelinesResponse(
                 error = null,
-                pipelines = this.json.parse(PipelineModel.serializer().list, response)
+                pipelines = this.json.decodeFromString(
+                    ListSerializer(
+                        PipelineModel.serializer()), response)
             )
         },
         failed = {

@@ -54,7 +54,7 @@ class GitlabFuelClient private constructor(
             query = query,
             variables = variables
         )
-        return this.callGraphQL(json.stringify(GraphqlRequest.serializer(), graphqlRequest))
+        return this.callGraphQL(json.encodeToString(GraphqlRequest.serializer(), graphqlRequest))
     }
 
     companion object {

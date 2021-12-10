@@ -3,9 +3,9 @@ package net.ntworld.mergeRequestIntegration.update
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.ResponseResultOf
 import com.github.kittinunf.result.Result
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.list
+import kotlinx.serialization.serializer
 import java.util.*
 
 object UpdateManager {
@@ -13,7 +13,7 @@ object UpdateManager {
     private const val METADATA_URL = "https://nhat-phan.github.io/updates/merge-request-integration/metadata.json"
     private const val CHECK_INTERVAL = 3600000 // Every 1 hour
 
-    private val myJson: Json = Json(JsonConfiguration.Stable.copy(strictMode = false))
+    private val myJson: Json = Json
     private var myLastCheckDate : Date? = null
 
     fun shouldGetAvailableUpdates(): Boolean {
@@ -49,7 +49,7 @@ object UpdateManager {
     }
 
     private fun buildAvailableUpdates(input: String): List<String> {
-        val metadata = myJson.parse(UpdateMetadata.serializer().list, input).sortedBy { it.id }
+        val metadata = myJson.decodeFromString(ListSerializer(UpdateMetadata.serializer()), input).sortedBy { it.id }
         val currentVersion = metadata.firstOrNull { it.version == CURRENT_VERSION }
         if (null === currentVersion) {
             return listOf()

@@ -34,7 +34,8 @@ dependencies {
     implementation("org.gitlab4j:gitlab4j-api:$gitlab4jVersion")
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
-    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
+    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+    implementation("com.fasterxml.uuid:java-uuid-generator:3.2.0")
 
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration-core"))
@@ -56,8 +57,6 @@ tasks {
     named<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
         val version = if (!enterpriseEditionVersion.endsWith("eap"))
             enterpriseEditionVersion else enterpriseEditionVersion.substring(0, enterpriseEditionVersion.length - 3)
-//        changeNotes(htmlFixer("./merge-request-integration-ee/doc/release-notes.$version.html"))
-//        pluginDescription(htmlFixer("./merge-request-integration-ee/doc/description.html"))
         sinceBuild.set(intellijSinceBuild)
         untilBuild.set(intellijUntilBuild)
     }

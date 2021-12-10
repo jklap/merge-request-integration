@@ -19,7 +19,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.github.nhat-phan.foundation:foundation-jvm:$foundationVersion")
     implementation("joda-time:joda-time:$jodaTimeVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationRuntimeVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationRuntimeVersion")
 
     kapt("com.github.nhat-phan.foundation:foundation-processor:$foundationProcessorVersion")
     kaptTest("com.github.nhat-phan.foundation:foundation-processor:$foundationProcessorVersion")

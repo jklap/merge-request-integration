@@ -1,5 +1,6 @@
 package net.ntworld.mergeRequestIntegration.provider.github.requestHandler
 
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.serializer
 import net.ntworld.foundation.Handler
 import net.ntworld.foundation.RequestHandler
@@ -44,7 +45,7 @@ class GithubSearchPRsRequestHandler : RequestHandler<GithubSearchPRsRequest, Git
             )
 
             val input = this.getJson(searchIssuesUrl, params)
-            GithubSearchPRsResponse(error = null, result = json.parse(
+            GithubSearchPRsResponse(error = null, result = json.decodeFromString(
                 SearchPullRequestResult.serializer(),
                 input
             ))

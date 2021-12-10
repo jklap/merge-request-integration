@@ -25,6 +25,7 @@ repositories {
     jcenter()
     mavenCentral()
     maven("https://jitpack.io")
+
 }
 
 dependencies {
@@ -33,7 +34,10 @@ dependencies {
     implementation("org.gitlab4j:gitlab4j-api:$gitlab4jVersion")
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
-    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
+    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+
+    //TODO fix this dependency
+    implementation("com.fasterxml.uuid:java-uuid-generator:3.2.0")
 
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration-core"))

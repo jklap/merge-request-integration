@@ -18,7 +18,7 @@ class GitlabFindMRApprovalRequestHandler : RequestHandler<GitlabFindMRApprovalRe
 
             GitlabFindMRApprovalResponse(
                 error = null,
-                approval = this.json.parse(ApprovalModel.serializer(), response)
+                approval = this.json.decodeFromString(ApprovalModel.serializer(), response)
             )
         },
         failed = {

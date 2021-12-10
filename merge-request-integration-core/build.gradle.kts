@@ -24,7 +24,7 @@ dependencies {
     implementation("org.gitlab4j:gitlab4j-api:$gitlab4jVersion")
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
-    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
+    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
 
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration"))
@@ -39,6 +39,21 @@ intellij {
     plugins.set(listOf("git4idea"))
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = jvmTarget
+val compileKotlin: KotlinCompile by tasks
+val compileTestKotlin: KotlinCompile by tasks
+
+compileKotlin.kotlinOptions {
+    jvmTarget = jvmTarget
+}
+
+compileTestKotlin.kotlinOptions {
+    jvmTarget = jvmTarget
+}
+
+tasks {
+    named<KotlinCompile>("compileKotlin") {
+        kotlinOptions {
+            jvmTarget = jvmTarget
+        }
+    }
 }

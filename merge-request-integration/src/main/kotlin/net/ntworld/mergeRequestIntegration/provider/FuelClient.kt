@@ -14,7 +14,7 @@ import javax.net.ssl.X509TrustManager
 abstract class FuelClient (
     private val credentials: ApiCredentials
 ) {
-    val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
+    val json = Json
 
     protected abstract fun injectAuthentication(httpRequest: Request): Request
 

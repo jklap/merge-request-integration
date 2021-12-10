@@ -1,6 +1,7 @@
 package net.ntworld.mergeRequestIntegration.util
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import net.ntworld.mergeRequest.MergeRequestState
@@ -47,7 +48,7 @@ class SavedFiltersUtil {
 
     companion object {
         @JvmStatic
-        private val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
+        private val json = Json
 
         @JvmStatic
         fun stringify(filter: GetMergeRequestFilter, ordering: MergeRequestOrdering): String {
@@ -68,13 +69,13 @@ class SavedFiltersUtil {
                     MergeRequestOrdering.OLDEST -> "oldest"
                 }
             )
-            return json.stringify(SavedFilters.serializer(), data)
+            return json.encodeToString(SavedFilters.serializer(), data)
         }
 
         @JvmStatic
         fun parse(input: String) : Pair<GetMergeRequestFilter, MergeRequestOrdering>? {
             return try {
-                val data = json.parse(SavedFilters.serializer(), input)
+                val data = json.decodeFromString(SavedFilters.serializer(), input)
                 data.toPair()
             } catch (exception: Exception) {
                 null

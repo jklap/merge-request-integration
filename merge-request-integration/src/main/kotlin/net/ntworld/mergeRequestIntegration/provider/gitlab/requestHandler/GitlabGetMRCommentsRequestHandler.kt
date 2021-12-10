@@ -20,7 +20,7 @@ class GitlabGetMRCommentsRequestHandler : RequestHandler<GitlabGetMRCommentsRequ
 
             GitlabGetMRCommentsResponse(
                 error = null,
-                payload = this.json.parse(GetCommentsPayload.serializer(), response)
+                payload = this.json.decodeFromString(GetCommentsPayload.serializer(), response)
             )
         },
         failed = {
