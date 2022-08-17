@@ -1,20 +1,18 @@
 plugins {
     // "org.jetbrains.kotlin.jvm"
-    kotlin("jvm") version "1.5.32" apply false
+    kotlin("jvm") version "1.6.21" apply false
 
-    // 1.3.72
     // "org.jetbrains.kotlin.kapt"
-    kotlin("kapt") version "1.5.32" apply false
-
-//    kotlin("plugin.serialization") version "1.5.0-M2" apply false
+    kotlin("kapt") version "1.6.21" apply false
 
     // "kotlinx-serialization"
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.6.21"
 
-    id("org.jetbrains.intellij") version "1.3.0" apply false
+    id("org.jetbrains.intellij") version "1.8.0" apply false
+    //id("org.jetbrains.kotlin.jvm") version "1.7.10"
 
     // plugin to check for dependency updates via task dependencyUpdates
-    id("com.github.ben-manes.versions") version "0.39.0"
+    id("com.github.ben-manes.versions") version "0.42.0"
 }
 
 allprojects { repositories { mavenLocal() } }
@@ -24,14 +22,12 @@ subprojects {
         apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "org.jetbrains.kotlin.kapt")
         apply(plugin = "kotlinx-serialization")
-//        apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     }
 
     if (name == "merge-request-integration") {
         apply(plugin = "org.jetbrains.kotlin.jvm")
         apply(plugin = "org.jetbrains.kotlin.kapt")
         apply(plugin = "kotlinx-serialization")
-//        apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
     }
 
     if (name == "merge-request-integration-core") {

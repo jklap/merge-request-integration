@@ -13,6 +13,7 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.SimpleToolWindowPanel
 import com.intellij.ui.JBColor
 import com.intellij.ui.components.Label
+import com.intellij.util.ui.StyleSheetUtil
 import com.intellij.util.ui.UIUtil
 import net.miginfocom.swing.MigLayout
 import net.ntworld.mergeRequest.Comment

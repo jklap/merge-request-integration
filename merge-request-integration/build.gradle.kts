@@ -17,7 +17,6 @@ group = artifactGroup
 version = artifactVersion
 
 repositories {
-    jcenter()
     mavenCentral()
     maven("https://jitpack.io")
 }
@@ -32,7 +31,7 @@ dependencies {
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
 
-    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationRuntimeVersion")
     implementation("com.github.javafaker:javafaker:$javaFakerVersion")
 
@@ -41,8 +40,8 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit5"))
-    testImplementation("io.mockk:mockk:1.9")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.0")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
 }
 
 tasks.withType<Test> {
@@ -55,6 +54,12 @@ kapt {
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = jvmTarget
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = jvmTarget
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = jvmTarget
+    }
 }

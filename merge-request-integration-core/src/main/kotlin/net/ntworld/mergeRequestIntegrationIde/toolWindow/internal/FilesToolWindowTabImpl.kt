@@ -122,10 +122,24 @@ class FilesToolWindowTabImpl(
     override fun setChanges(providerData: ProviderData, changes: List<Change>) {
         myProviderData = providerData
         myLogger.info("from", Exception("here"))
-        myLogger.info("setting changes from:")
+        myLogger.info("original changes from:")
         changes.forEach { change -> myLogger.info("$change.") }
+        // filter the list of changes
+
+        val filteredChanges = ArrayList<Change>()
+        changes.forEach { change ->
+            if ( filteredChanges.contains(change) ) {
+                // ignore it
+            } else {
+                // TODO: check to see if it exists but with a state change (like moved)
+                filteredChanges.add(change)
+            }
+        }
+        myLogger.info("setting changes from:")
+        filteredChanges.forEach { change -> myLogger.info("$change.") }
+
         ApplicationManager.getApplication().invokeLater {
-            myTree.setChangesToDisplay(changes)
+            myTree.setChangesToDisplay(filteredChanges)
         }
         myToolbar.isVisible = true
         myComponent.setContent(myTreeWrapper)

@@ -2,8 +2,7 @@
     <id>net.ntworld.nhat-phan.merge-request-integration-ee</id>
     <name>Merge Request Integration EE - Code Review for GitLab</name>
     <vendor>ntworld</vendor>
-    <version>2019.3.2</version>
-    <product-descriptor code="PMRINTEGEE" release-date="20200107" release-version="20193"/>
+    <product-descriptor code="PMRINTEGEE" release-date="20200107" release-version="20193" optional="true" />
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>

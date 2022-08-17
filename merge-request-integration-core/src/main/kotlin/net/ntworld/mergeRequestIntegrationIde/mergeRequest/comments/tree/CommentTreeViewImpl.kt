@@ -126,7 +126,7 @@ class CommentTreeViewImpl(
         val children = myRoot.children()
         for (child in children) {
             if (isGeneralCommentsTreeNode(child as TreeNode)) {
-                myTree.selectionPath = TreeUtil.getPath(myRoot, child as @org.jetbrains.annotations.NotNull TreeNode)
+                myTree.selectionPath = TreeUtil.getPath(myRoot, child)
                 break
             }
         }

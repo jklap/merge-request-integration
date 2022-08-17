@@ -130,7 +130,7 @@ open class ServiceBase : PersistentStateComponent<Element> {
         if (null === attribute) {
             return false
         }
-        return attribute.value == "1" || attribute.value.toLowerCase() == "true"
+        return attribute.value == "1" || attribute.value.lowercase() == "true"
     }
 
     protected fun encryptCredentials(info: ProviderInfo, credentials: ApiCredentials): ApiCredentials {

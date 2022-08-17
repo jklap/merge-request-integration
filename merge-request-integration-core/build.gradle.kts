@@ -13,7 +13,6 @@ group = artifactGroup
 version = artifactVersion
 
 repositories {
-    jcenter()
     mavenCentral()
     maven("https://jitpack.io")
 }
@@ -24,7 +23,7 @@ dependencies {
     implementation("org.gitlab4j:gitlab4j-api:$gitlab4jVersion")
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
-    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
 
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration"))
@@ -39,21 +38,16 @@ intellij {
     plugins.set(listOf("git4idea"))
 }
 
-val compileKotlin: KotlinCompile by tasks
-val compileTestKotlin: KotlinCompile by tasks
-
-compileKotlin.kotlinOptions {
-    jvmTarget = jvmTarget
-}
-
-compileTestKotlin.kotlinOptions {
-    jvmTarget = jvmTarget
-}
-
 tasks {
-    named<KotlinCompile>("compileKotlin") {
-        kotlinOptions {
-            jvmTarget = jvmTarget
-        }
+    buildSearchableOptions {
+        enabled = false
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = jvmTarget
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = jvmTarget
     }
 }

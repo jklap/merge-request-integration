@@ -22,10 +22,8 @@ version = if (eapRelease == "false") {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
     maven("https://jitpack.io")
-
 }
 
 dependencies {
@@ -34,10 +32,10 @@ dependencies {
     implementation("org.gitlab4j:gitlab4j-api:$gitlab4jVersion")
     implementation("org.kohsuke:github-api:$githubApiVersion")
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
-    implementation("com.atlassian.commonmark:commonmark:$commonmarkVersion")
+    implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
 
     //TODO fix this dependency
-    implementation("com.fasterxml.uuid:java-uuid-generator:3.2.0")
+    implementation("com.fasterxml.uuid:java-uuid-generator:4.0.1")
 
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration-core"))
@@ -51,18 +49,25 @@ intellij {
     plugins.set(listOf("git4idea"))
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = jvmTarget
-}
-
 tasks {
-    named<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-        val version = if (!communityEditionVersion.endsWith("eap"))
-            communityEditionVersion else communityEditionVersion.substring(0, communityEditionVersion.length - 3)
-//        changeNotes(htmlFixer("./merge-request-integration-ce/doc/release-notes.$version.html"))
-//        pluginDescription(htmlFixer("./merge-request-integration-ce/doc/description.html"))
+    buildSearchableOptions {
+        enabled = false
+    }
+
+    patchPluginXml {
+//        val version = if (!communityEditionVersion.endsWith("eap"))
+//            communityEditionVersion else communityEditionVersion.substring(0, communityEditionVersion.length - 3)
+//        version.set("${project.version}")
         sinceBuild.set(intellijSinceBuild)
         untilBuild.set(intellijUntilBuild)
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = jvmTarget
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = jvmTarget
     }
 }
 

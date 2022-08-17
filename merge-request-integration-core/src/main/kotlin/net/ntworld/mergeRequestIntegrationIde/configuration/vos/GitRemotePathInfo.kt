@@ -13,7 +13,7 @@ class GitRemotePathInfo(private val input: String) {
         private set
 
     init {
-        val inputLowerCase = input.toLowerCase()
+        val inputLowerCase = input.lowercase()
         if (inputLowerCase.startsWith("https://") || inputLowerCase.startsWith("http://")) {
             parseHttpUrl(input)
         }
