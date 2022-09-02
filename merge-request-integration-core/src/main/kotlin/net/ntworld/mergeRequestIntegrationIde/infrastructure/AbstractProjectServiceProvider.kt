@@ -5,6 +5,7 @@ import com.intellij.notification.NotificationGroup
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileEditor.FileEditorManagerEvent
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.fileEditor.TextEditor
@@ -54,11 +55,13 @@ import net.ntworld.mergeRequestIntegrationIde.task.RegisterProviderTask
 import net.ntworld.mergeRequestIntegrationIde.ui.configuration.GithubConnectionsConfigurableBase
 import net.ntworld.mergeRequestIntegrationIde.ui.configuration.GitlabConnectionsConfigurableBase
 import org.jdom.Element
+import java.util.*
 import com.intellij.openapi.project.Project as IdeaProject
 
 abstract class AbstractProjectServiceProvider(
     final override val project: IdeaProject
 ) : ProjectServiceProvider, ServiceBase() {
+    private val myLogger = Logger.getInstance(this.javaClass)
     private val myNotification: NotificationGroup = NotificationGroupManager.getInstance().getNotificationGroup("Merge Request Integration")
 
     private var myIsInitialized = false
@@ -184,6 +187,7 @@ abstract class AbstractProjectServiceProvider(
 
         getProviderConfigurations().forEach { registerProviderSettings(it) }
         projectNotifierTopic.initialized()
+
         myIsInitialized = true
     }
 
@@ -280,7 +284,7 @@ abstract class AbstractProjectServiceProvider(
 
         val task = RegisterProviderTask(
             this,
-            id = UUIDGenerator.generate(),
+            id = UUID.randomUUID().toString(),
             name = name,
             settings = settings,
             listener = object : RegisterProviderTask.Listener {

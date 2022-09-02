@@ -34,9 +34,6 @@ dependencies {
     implementation("org.ocpsoft.prettytime:prettytime:$prettyTimeVersion")
     implementation("com.vladsch.flexmark:flexmark-all:$flexMarkVersion")
 
-    //TODO fix this dependency
-    implementation("com.fasterxml.uuid:java-uuid-generator:4.0.1")
-
     implementation(project(":contracts"))
     implementation(project(":merge-request-integration-core"))
     implementation(project(":merge-request-integration"))

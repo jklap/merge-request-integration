@@ -18,7 +18,7 @@ class EnterpriseApplicationServiceProvider: AbstractApplicationServiceProvider()
     }
 
     override fun findProjectServiceProvider(project: Project): ProjectServiceProvider {
-        val service = ServiceManager.getService(project, EnterpriseProjectServiceProvider::class.java)
+        val service = project.getService(EnterpriseProjectServiceProvider::class.java)
         registerProjectServiceProvider(service)
 
         return service

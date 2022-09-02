@@ -6,6 +6,7 @@ import net.ntworld.foundation.cqrs.CommandHandler
 import net.ntworld.foundation.util.UUIDGenerator
 import net.ntworld.mergeRequestIntegration.provider.gitlab.GitlabFuelClient
 import net.ntworld.mergeRequestIntegration.provider.gitlab.command.GitlabCreateDiffNoteCommand
+import java.util.*
 
 @Handler
 class GitlabCreateDiffNoteCommandHandler : CommandHandler<GitlabCreateDiffNoteCommand> {
@@ -39,7 +40,7 @@ class GitlabCreateDiffNoteCommandHandler : CommandHandler<GitlabCreateDiffNoteCo
     )
 
     private fun generateClientMutationId(): String {
-        return "MRI:${UUIDGenerator.generate()}"
+        return "MRI:${UUID.randomUUID()}"
     }
 
     private fun attachFooterToBody(body: String, clientMutationId: String): String {
