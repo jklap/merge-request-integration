@@ -50,4 +50,11 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = jvmTarget
     }
+
+    setupDependencies {
+        doLast {
+            // Fixes IDEA-298989.
+            fileTree("$buildDir/instrumented/instrumentCode") { include("**/*.class") }.files.forEach { delete(it) }
+        }
+    }
 }

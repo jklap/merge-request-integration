@@ -8,8 +8,7 @@ plugins {
     // "kotlinx-serialization"
     kotlin("plugin.serialization") version "1.6.21"
 
-    id("org.jetbrains.intellij") version "1.8.0" apply false
-    //id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.intellij") version "1.9.0" apply false
 
     // plugin to check for dependency updates via task dependencyUpdates
     id("com.github.ben-manes.versions") version "0.42.0"
