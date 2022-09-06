@@ -3,7 +3,6 @@ package net.ntworld.mergeRequestIntegrationIde.infrastructure
 import com.intellij.ide.AppLifecycleListener
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.project.impl.ProjectLifecycleListener
 import net.ntworld.mergeRequest.ProjectVisibility
 import net.ntworld.mergeRequest.ProviderData
 import net.ntworld.mergeRequest.ProviderInfo
@@ -21,8 +20,9 @@ import net.ntworld.mergeRequestIntegrationIde.watcher.WatcherManagerImpl
 import org.jdom.Element
 import java.net.URL
 import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.startup.StartupActivity
 
-abstract class AbstractApplicationServiceProvider : ApplicationServiceProvider, ServiceBase() {
+abstract class AbstractApplicationServiceProvider : ApplicationServiceProvider, StartupActivity, ServiceBase() {
     private val myLogger = Logger.getInstance(this.javaClass)
 
     final override val watcherManager: WatcherManager = WatcherManagerImpl()
@@ -36,26 +36,18 @@ abstract class AbstractApplicationServiceProvider : ApplicationServiceProvider, 
         "gitlab.personio-internal.de"
     )
     private val myAppLifecycleListener = object : AppLifecycleListener {
-//        override fun appStarting(projectFromCommandLine: Project?) {
-//            if (null !== projectFromCommandLine) {
-//                findProjectServiceProvider(projectFromCommandLine).initialize()
-//            }
-//        }
-
         override fun appClosing() {
             watcherManager.dispose()
         }
     }
-    private val myProjectLifecycleListener = object: ProjectLifecycleListener {
-        override fun projectComponentsInitialized(project: Project) {
-            findProjectServiceProvider(project).initialize()
-        }
+
+    override fun runActivity(project: Project) {
+        findProjectServiceProvider(project).initialize()
     }
 
     init {
         val connection = ApplicationManager.getApplication().messageBus.connect()
         connection.subscribe(AppLifecycleListener.TOPIC, myAppLifecycleListener)
-        connection.subscribe(ProjectLifecycleListener.TOPIC, myProjectLifecycleListener)
     }
 
     protected fun registerProjectServiceProvider(projectServiceProvider: ProjectServiceProvider)

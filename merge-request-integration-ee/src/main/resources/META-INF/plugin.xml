@@ -12,6 +12,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="net.ntworld.mergeRequestIntegrationIdeEE.EnterpriseApplicationServiceProvider"/>
         <projectService serviceImplementation="net.ntworld.mergeRequestIntegrationIdeEE.EnterpriseProjectServiceProvider"/>
+        <postStartupActivity implementation="net.ntworld.mergeRequestIntegrationIdeEE.EnterpriseApplicationServiceProvider" />
         <diff.DiffExtension implementation="net.ntworld.mergeRequestIntegrationIdeEE.DiffExtension"/>
         <notificationGroup id="Merge Request Integration" displayType="BALLOON" key="net.ntworld.notifications"/>
 
