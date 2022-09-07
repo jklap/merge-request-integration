@@ -12,6 +12,7 @@ val githubApiVersion: String by project
 val prettyTimeVersion: String by project
 val flexMarkVersion: String by project
 val mockkVersion: String by project
+val kotlintestVersion: String by project
 
 group = artifactGroup
 version = artifactVersion
@@ -40,7 +41,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit5"))
     testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:$kotlintestVersion")
 }
 
 tasks.withType<Test> {
