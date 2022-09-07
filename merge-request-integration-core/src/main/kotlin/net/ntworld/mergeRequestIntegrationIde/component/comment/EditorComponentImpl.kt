@@ -152,6 +152,9 @@ class EditorComponentImpl(
         when(type) {
             EditorComponent.Type.NEW_DISCUSSION -> myEditorTextField.setPlaceholder("Start a new discussion...")
             EditorComponent.Type.REPLY -> myEditorTextField.setPlaceholder("Reply...")
+            else -> {
+
+            }
         }
 
         myPanel.setContent(myEditorTextField)
