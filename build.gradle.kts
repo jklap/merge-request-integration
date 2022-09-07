@@ -8,6 +8,7 @@ plugins {
     // "kotlinx-serialization"
     kotlin("plugin.serialization") version "1.6.21"
 
+    // https://plugins.gradle.org/plugin/org.jetbrains.intellij
     id("org.jetbrains.intellij") version "1.9.0" apply false
 
     // plugin to check for dependency updates via task dependencyUpdates

@@ -22,7 +22,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation("com.github.nhat-phan.foundation:foundation-jvm:$foundationVersion")
     implementation(project(":contracts"))
     implementation("joda-time:joda-time:$jodaTimeVersion")
