@@ -1,6 +1,7 @@
 package net.ntworld.mergeRequestIntegrationIde.ui.util
 
 import com.intellij.openapi.actionSystem.ActionGroup
+import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.ui.tabs.JBTabs
 import com.intellij.ui.tabs.TabInfo
 import com.intellij.ui.tabs.TabsListener
@@ -14,7 +15,7 @@ interface TabsUI {
 
     fun setCommonCenterActionGroupFactory(factory: () -> ActionGroup)
 
-    fun setCommonSideComponentFactory(factory: () -> JComponent)
+    fun setCommonSideComponentFactory(factory: () -> ActionToolbar)
 
     fun addTab(tabInfo: TabInfo)
 

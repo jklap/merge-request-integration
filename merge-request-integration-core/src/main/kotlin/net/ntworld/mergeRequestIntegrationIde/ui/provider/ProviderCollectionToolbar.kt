@@ -25,12 +25,14 @@ class ProviderCollectionToolbar : ProviderCollectionToolbarUI, Component {
         val toolbar = ActionManager.getInstance().createActionToolbar(
             "${ProviderCollectionToolbar::class.java.canonicalName}/toolbar-left", mainActionGroup, true
         )
+        toolbar.targetComponent = panel
 
         val rightCornerActionGroup = DefaultActionGroup()
         // rightCornerActionGroup.add(myHelpAction)
         val rightCornerToolbar = ActionManager.getInstance().createActionToolbar(
             "${ProviderCollectionToolbar::class.java.canonicalName}/toolbar-right", rightCornerActionGroup, true
         )
+        rightCornerToolbar.targetComponent = panel
 
         panel.add(toolbar.component)
         panel.add(rightCornerToolbar.component)

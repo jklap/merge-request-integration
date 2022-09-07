@@ -5,7 +5,7 @@ import net.ntworld.mergeRequest.*
 import net.ntworld.mergeRequestIntegrationIde.ui.Component
 import java.util.*
 
-interface MergeRequestDetailsToolbarUI : Component {
+interface MergeRequestDetailsToolbarUI {
     val dispatcher: EventDispatcher<Listener>
 
     fun setPipelines(mergeRequestInfo: MergeRequestInfo, pipelines: List<Pipeline>)

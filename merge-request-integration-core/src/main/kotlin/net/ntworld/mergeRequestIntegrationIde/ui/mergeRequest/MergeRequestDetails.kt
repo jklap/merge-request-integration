@@ -3,6 +3,7 @@ package net.ntworld.mergeRequestIntegrationIde.ui.mergeRequest
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.ActionGroup
+import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.ui.ScrollPaneFactory
@@ -202,12 +203,12 @@ class MergeRequestDetails(
         return DefaultActionGroup()
     }
 
-    private fun toolbarCommonSideComponentFactory(): JComponent {
-        val toolbar: MergeRequestDetailsToolbarUI = MergeRequestDetailsToolbar(
+    private fun toolbarCommonSideComponentFactory(): ActionToolbar {
+        val toolbar = MergeRequestDetailsToolbar(
             projectServiceProvider, providerData, this
         )
         toolbar.dispatcher.addListener(myToolbarListener)
         myToolbars.add(toolbar)
-        return toolbar.createComponent()
+        return toolbar.createToolbar()
     }
 }

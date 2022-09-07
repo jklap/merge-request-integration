@@ -60,10 +60,13 @@ class MergeRequestCollectionFilter(
             rightCornerActionGroup,
             true
         )
+        rightCornerToolbar.targetComponent = panel
 
         val textFilter = Wrapper(mySearchField)
         textFilter.setVerticalSizeReferent(myToolbar.component)
         textFilter.border = JBUI.Borders.emptyLeft(5)
+
+        myToolbar.targetComponent = panel
 
         panel.add(textFilter)
         panel.add(myToolbar.component)

@@ -193,6 +193,7 @@ class CommentComponentImpl(
             leftActionGroupTwo,
             true
         )
+        leftToolbarTwo.targetComponent = panel
 
         val rightActionGroup = DefaultActionGroup()
         if (options.showMoveToDialog) {
@@ -227,6 +228,7 @@ class CommentComponentImpl(
             rightActionGroup,
             true
         )
+        rightToolbar.targetComponent = panel
 
         panel.add(myNameLabel)
         panel.add(myUsernameLabel)

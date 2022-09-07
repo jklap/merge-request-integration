@@ -3,6 +3,7 @@ package net.ntworld.mergeRequestIntegrationIde.ui.util
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.wm.IdeFocusManager
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.ui.tabs.*
@@ -20,7 +21,7 @@ class Tabs(
 ) : TabsUI {
     private val myTabs: JBTabs = MyTabs(ideaProject, disposable)
     private var myCommonActionGroupInCenterFactory: (() -> ActionGroup)? = null
-    private var myCommonSideComponentFactory: (() -> JComponent)? = null
+    private var myCommonSideComponentFactory: (() -> ActionToolbar)? = null
 
     override fun getTabs(): JBTabs = myTabs
 
@@ -28,7 +29,7 @@ class Tabs(
         myCommonActionGroupInCenterFactory = factory
     }
 
-    override fun setCommonSideComponentFactory(factory: () -> JComponent) {
+    override fun setCommonSideComponentFactory(factory: () -> ActionToolbar) {
         myCommonSideComponentFactory = factory
     }
 
@@ -37,7 +38,9 @@ class Tabs(
             tabInfo.setActions(myCommonActionGroupInCenterFactory!!.invoke(), null)
         }
         if (null !== myCommonSideComponentFactory) {
-            tabInfo.sideComponent = myCommonSideComponentFactory!!.invoke()
+            val toolbar = myCommonSideComponentFactory!!.invoke()
+            toolbar.targetComponent = myTabs.component
+            tabInfo.sideComponent = toolbar.component
         }
         myTabs.addTab(tabInfo)
     }

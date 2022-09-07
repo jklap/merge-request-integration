@@ -59,15 +59,18 @@ class FilesToolWindowTabImpl(
             leftActionGroup,
             true
         )
+        leftToolbar.targetComponent = panel
 
         panel.add(JPanel())
         panel.add(leftToolbar.component)
-        panel.add(
-            ToolbarUtil.createExpandAndCollapseToolbar(
+
+        val toolBar =  ToolbarUtil.createExpandAndCollapseToolbar(
                 "${this::class.java.canonicalName}/toolbar-right",
                 myTree
-            )
         )
+        toolBar.targetComponent = panel
+
+        panel.add(toolBar.component)
         panel
     }
 

@@ -1,6 +1,7 @@
 package net.ntworld.mergeRequestIntegrationIde.ui.util
 
 import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.ui.treeStructure.actions.CollapseAllAction
 import com.intellij.ui.treeStructure.actions.ExpandAllAction
@@ -8,7 +9,7 @@ import java.awt.Component
 import javax.swing.JTree
 
 object ToolbarUtil {
-    fun createExpandAndCollapseToolbar(name: String, tree: JTree): Component {
+    fun createExpandAndCollapseToolbar(name: String, tree: JTree): ActionToolbar {
         val actionGroup = DefaultActionGroup()
         actionGroup.add(ExpandAllAction(tree))
         actionGroup.add(CollapseAllAction(tree))
@@ -18,6 +19,6 @@ object ToolbarUtil {
             actionGroup,
             true
         )
-        return toolbar.component
+        return toolbar
     }
 }

@@ -54,14 +54,14 @@ class ProviderDetails(
 
         override fun displayTextInToolbar(): Boolean = true
     }
-    private val myCommonSideComponentFactory: () -> JComponent = {
+    private val myCommonSideComponentFactory: () -> ActionToolbar = {
         val actionGroup = DefaultActionGroup()
         actionGroup.add(MyOpenAction(this))
 
         val toolbar = ActionManager.getInstance().createActionToolbar(
             "${ProviderDetails::class.java.canonicalName}/toolbar-right", actionGroup, true
         )
-        toolbar.component
+        toolbar
     }
     private val myTabs: TabsUI by lazy {
         val tabs = Tabs(projectServiceProvider.project, toolWindow.contentManager)

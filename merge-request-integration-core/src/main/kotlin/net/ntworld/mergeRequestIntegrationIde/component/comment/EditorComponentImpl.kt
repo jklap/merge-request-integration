@@ -219,6 +219,7 @@ class EditorComponentImpl(
             leftActionGroup,
             true
         )
+        leftToolbar.targetComponent = panel
 
         val rightActionGroup = DefaultActionGroup()
         val rightToolbar = ActionManager.getInstance().createActionToolbar(
@@ -226,6 +227,7 @@ class EditorComponentImpl(
             rightActionGroup,
             true
         )
+        rightToolbar.targetComponent = panel
 
         panel.add(leftToolbar.component)
         panel.add(rightToolbar.component)

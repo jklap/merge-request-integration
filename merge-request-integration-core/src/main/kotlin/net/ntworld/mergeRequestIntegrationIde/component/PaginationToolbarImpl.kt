@@ -43,6 +43,7 @@ internal class PaginationToolbarImpl(private val displayRefreshButton: Boolean =
         val toolbar = ActionManager.getInstance().createActionToolbar(
             "${this::class.java.canonicalName}/toolbar-right", actionGroup, true
         )
+        toolbar.targetComponent = panel
 
         panel.add(myInfo)
         panel.add(toolbar.component)

@@ -35,6 +35,7 @@ internal class CommentTreeViewToolbar(
             mainActionGroup,
             true
         )
+        mainToolbar.targetComponent = panel
 
         val rightActionGroup = DefaultActionGroup()
         rightActionGroup.add(myRefreshButton)
@@ -48,6 +49,7 @@ internal class CommentTreeViewToolbar(
             rightActionGroup,
             true
         )
+        rightToolbar.targetComponent = panel
 
         panel.add(mainToolbar.component)
         panel.add(rightToolbar.component)

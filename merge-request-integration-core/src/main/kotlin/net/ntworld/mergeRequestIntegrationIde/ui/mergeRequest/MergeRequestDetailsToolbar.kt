@@ -154,7 +154,7 @@ class MergeRequestDetailsToolbar(
         myToolbar.component.isVisible = false
     }
 
-    override fun createComponent(): JComponent = myToolbar.component
+    fun createToolbar(): ActionToolbar = myToolbar
 
     private class MyRefreshAction(private val self: MergeRequestDetailsToolbar) :
         AnAction("Refresh", "Refresh merge request info", AllIcons.Actions.Refresh) {
@@ -245,7 +245,7 @@ class MergeRequestDetailsToolbar(
             if (!self.myApprovalPanel.shouldDisplayApprovalPanel()) {
                 return
             }
-            val reference = self.createComponent() // toolbar component
+            val reference = self.createToolbar().component // toolbar component
             val popup = JBPopupFactory.getInstance()
                 .createComponentPopupBuilder(
                     self.myApprovalPanel.createComponent(),
