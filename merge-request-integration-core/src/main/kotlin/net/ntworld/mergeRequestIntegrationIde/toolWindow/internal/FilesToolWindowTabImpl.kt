@@ -123,7 +123,7 @@ class FilesToolWindowTabImpl(
         myProviderData = providerData
         myLogger.info("from", Exception("here"))
         myLogger.info("original changes from:")
-        changes.forEach { change -> myLogger.info("$change.") }
+        changes.forEach { change -> myLogger.info("$change") }
         // filter the list of changes
 
         val filteredChanges = ArrayList<Change>()

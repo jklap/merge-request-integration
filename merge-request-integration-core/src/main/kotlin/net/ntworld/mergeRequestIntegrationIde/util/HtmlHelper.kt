@@ -13,7 +13,6 @@ object HtmlHelper {
 
     fun convertFromMarkdown(md: String): String {
         val body = myHtmlRenderer.render(myParser.parse(md))
-        myLogger.info("body: $body")
         return body
     }
 
