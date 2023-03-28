@@ -19,7 +19,7 @@ class GitlabGetMRPipelinesRequestHandler : RequestHandler<GitlabGetMRPipelinesRe
 
             GitlabGetMRPipelinesResponse(
                 error = null,
-                pipelines = this.json.decodeFromString(
+                pipelines = decodeFromString(
                     ListSerializer(
                         PipelineModel.serializer()), response)
             )

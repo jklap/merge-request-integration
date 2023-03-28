@@ -45,7 +45,7 @@ class GithubSearchPRsRequestHandler : RequestHandler<GithubSearchPRsRequest, Git
             )
 
             val input = this.getJson(searchIssuesUrl, params)
-            GithubSearchPRsResponse(error = null, result = json.decodeFromString(
+            GithubSearchPRsResponse(error = null, result = decodeFromString(
                 SearchPullRequestResult.serializer(),
                 input
             ))

@@ -1,6 +1,7 @@
 package net.ntworld.mergeRequestIntegrationIde.ui.mergeRequest.tab.commit
 
 import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DefaultActionGroup
@@ -78,7 +79,9 @@ class CommitCollection : CommitCollectionUI {
         myList.background = JBColor.background()
 
         myComponent.setContent(ScrollPaneFactory.createScrollPane(myList, true))
-        myComponent.toolbar = createToolbar()
+        var toolBar = createToolbar()
+        toolBar.targetComponent = myList
+        myComponent.toolbar = toolBar.component
     }
 
     override fun clear() {
@@ -115,7 +118,7 @@ class CommitCollection : CommitCollectionUI {
         }
     }
 
-    private fun createToolbar() : JComponent {
+    private fun createToolbar() : ActionToolbar {
         val actionGroup = DefaultActionGroup()
         actionGroup.add(myUnselectAllButton)
         actionGroup.addSeparator()
@@ -125,6 +128,6 @@ class CommitCollection : CommitCollectionUI {
             "${CommitCollection::class.java.canonicalName}/toolbar",
             actionGroup,
             true
-        ).component
+        )
     }
 }

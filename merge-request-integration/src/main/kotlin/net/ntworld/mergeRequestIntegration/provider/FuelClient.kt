@@ -2,6 +2,8 @@ package net.ntworld.mergeRequestIntegration.provider
 
 import com.github.kittinunf.fuel.core.*
 import com.github.kittinunf.result.Result
+import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import net.ntworld.mergeRequest.api.ApiCredentials
@@ -65,5 +67,10 @@ abstract class FuelClient (
             }
         }
     }
+
+     fun <T> decodeFromString(deserializer: DeserializationStrategy<T>, string: String): T {
+         // TODO: wrap to catch exceptions
+         return json.decodeFromString(deserializer, string)
+     }
 
 }

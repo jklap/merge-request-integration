@@ -18,7 +18,7 @@ class GitlabReplyNoteRequestHandler : RequestHandler<GitlabReplyNoteRequest, Git
                 Pair("body", request.body)
             )
             val result = this.postJson(url = url, parameters = parameters)
-            val payload = json.decodeFromString(ReplyCommentPayload.serializer(), result)
+            val payload = decodeFromString(ReplyCommentPayload.serializer(), result)
 
             GitlabReplyNoteResponse(error = null, createdCommentId = payload.id)
         },

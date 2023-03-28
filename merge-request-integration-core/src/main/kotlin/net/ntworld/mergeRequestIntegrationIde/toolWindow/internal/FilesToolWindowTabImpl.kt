@@ -191,6 +191,7 @@ class FilesToolWindowTabImpl(
             }
             val viewedRevision = reviewContext?.getChangeData(change, ReviewContext.HAS_VIEWED)
             if ( viewedRevision == null ) {
+                // TODO: doesn't get removed when a deleted file has been reviewed
                 renderer.append(" [" + "new" + "] ", SimpleTextAttributes.REGULAR_BOLD_ATTRIBUTES)
             } else {
                 // check revision
